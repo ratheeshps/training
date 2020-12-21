@@ -1,0 +1,50 @@
+Account - Account Information
+               - Transaction Information 
+
+Account Information
+-------------------------------
+AccountNumber
+AccountType
+LedgerCode
+CustomerID
+Balance
+CurrencyName
+IBAN
+
+Transaction
+-------------------------
+Date - When we did transaction
+Value Date - which date the transcation effected from bank
+TransactionDescription - FundTranfer to another account, BillPayment
+Amount
+TypeTransacation (Credit/Debit)
+Targetaccount
+
+FundTransfer - 
+Own Account Transfer - You accounts with same bank
+Third Party Account Transfer - You can transfer to another person's account (it can be in same bank or another bank, but it should be inside the country)
+
+International Transfer (Remittance) - SWIFT Payment
+------------------------------------
+
+FundTransfer feature 
+_________________
+AccountList - INR, USD
+BeneficiaryAccountList - 
+Enter Amount
+Remarks
+
+-> OTP Verification
+-> Submitted to core Banking
+
+
+Clone - Download github code to your local machine.
+Push -> Sending files/changes to remote repository
+Pull -> Getting files/changes for remote repository
+Commit -> Saving changes to the repository (local)
+
+
+
+
+
+

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace AccountService.Models
 {
+    // Select AccountNumber, AccountType,AccountName,LedgerCode,CustomerID,Balance,CurrencyName from AcccountsTable
     public class Account : IAccount
     {
         [Required]
@@ -18,7 +19,7 @@ namespace AccountService.Models
         // 0210 - 0239301 - 001 -0010 -000
         // Branch Code - Customer Number - BankCode - Ledger - Sub ledger
         public string CustomerID { get; set; }
-        public string Balance { get; set; }
+        public decimal Balance { get; set; }
         public string CurrencyName { get; set; }
     }
 
@@ -29,7 +30,7 @@ namespace AccountService.Models
          string AccountName { get; set; }
          string LedgerCode { get; set; } 
          string CustomerID { get; set; }
-         string Balance { get; set; }
+        decimal Balance { get; set; }
          string CurrencyName { get; set; }
     }
 }

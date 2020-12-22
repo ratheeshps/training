@@ -29,6 +29,8 @@ namespace AccountService
         {
             services.AddControllers();
 
+
+
             //Adding Version
             services.AddApiVersioning(o =>
             {
@@ -48,14 +50,16 @@ namespace AccountService
                 app.UseDeveloperExceptionPage();
             }
 
-          
-            app.UseHttpsRedirection();
+            
 
             app.UseRouting();
 
             app.UseAuthorization();
-           
+            app.UseStaticFiles();
 
+            //Logging
+
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

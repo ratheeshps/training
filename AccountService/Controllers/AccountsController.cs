@@ -17,48 +17,24 @@ namespace AccountService.Controllers
     {
      
         [Microsoft.AspNetCore.Mvc.ApiVersion("1.0")] //  api/v1/accounts
+        ///
+        /// Get Accounts list
+        ///
         public IActionResult Get()
         {
-            // Calling a method to calculate account balance - Bank account balance
-            return Ok("Accounts Get Method");
+            // 1. ADO.NET - most performing method
+            // 2. Dapper - high performance and easily code
+            // 3. EntityFramework - easily code but heavy, low performance 
+
+            // if you are developer without much db knowledge - entrity framework is the best.
+
+
+            AccountDataAccess accountDataAccess = new AccountDataAccess();
+            
+            return Ok(accountDataAccess.GetAccounts("123"));
         }
 
-        [HttpGet("account")]
-        [Microsoft.AspNetCore.Mvc.ApiVersion("2.0")] // api/v2/account
-        public IActionResult Get2()
-        {
-            //
-            // Calling a method to calculate account balance - with Bank, Card, Loan balance
-
-            return Ok("Accounts Get Method");
-        }
-
-
-        [HttpPost]
-        public IActionResult Post([FromForm]  Account model)
-        {
-            if (ModelState.IsValid)
-            {
-                return Ok(model);
-
-            }
-            else
-            {
-                //Logging
-                if (!string.IsNullOrEmpty(model.AccountName))
-                {
-                    return BadRequest("No account name given");
-                }
-                else
-                    return BadRequest();
-            }
-        }
-
-        [HttpPost("accountpost")]
-        public IActionResult PostAccount()
-        {
-            return Ok();
-        }
+       
 
         
     }

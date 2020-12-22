@@ -54,6 +54,10 @@ namespace AccountService.Utilities
                         {
                             elements = data(reader);
                         }
+                        catch (Exception e)
+                        {
+                            elements = data(reader);
+                        }
                         finally
                         {
                             while (reader.NextResult())

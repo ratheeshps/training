@@ -24,9 +24,12 @@ namespace AccountService.DAL
 
         private static Account TranslateAsAccount(SqlDataReader reader)
         {
-            if (!reader.HasRows)
-                return null;
-            reader.Read();
+            //if (!isList)
+            //{
+            //    if (!reader.HasRows)
+            //        return null;
+            //    reader.Read();
+            //}
             var item = new Account();
 
             if (reader.IsColumnExists("AccountName"))

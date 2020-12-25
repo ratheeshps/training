@@ -21,7 +21,7 @@ namespace AccountService
             return response;
         }
 
-        public Response<List<Account>> GetAccounts(string customerid)
+        public Response<List<Account>> GetAccounts()
         {
             Response<List<Account>> response = new Response<List<Account>>();
 
@@ -35,14 +35,15 @@ namespace AccountService
             };
 
             SqlParameter[] param = {
-                new SqlParameter("@customerid",customerid),
+
               outStatus,
               outMessage
             };
 
 
-            List<Account> result= SqlHelper.ExtecuteProcedureReturnData<List<Account>>("sp_getaccounts", 
-                r=>r.TranslateAccount(),param);
+            List<Account> result= SqlHelper.ExtecuteProcedureReturnData<List<Account>>
+                ("sp_getaccounts", 
+                r=>r.TranslateAccountList(),param);
 
 
             response.Data = result;
@@ -53,7 +54,36 @@ namespace AccountService
 
         }
 
+        public Response<Account> GetSingleAccount(string accountNo)
+        {
+            Response<Account> response = new Response<Account>();
+
+            var outStatus = new SqlParameter("@Status", SqlDbType.NVarChar, 20)
+            {
+                Direction = ParameterDirection.Output
+            };
+            var outMessage = new SqlParameter("@Message", SqlDbType.NVarChar, -1)
+            {
+                Direction = ParameterDirection.Output
+            };
+
+            SqlParameter[] param = {
+                  new SqlParameter("@accountNo",accountNo),
+                  outStatus,
+              outMessage
+            };
 
 
+            Account result = SqlHelper.ExtecuteProcedureReturnData<Account>
+                ("sp_getsingleaccount",
+                r => r.TranslateAsAccount(), param);
+
+
+            response.Data = result;
+            response.Status = outStatus.Value.ToString();
+            response.Message = outMessage.Value.ToString();
+
+            return response;
+        }
     }
 }

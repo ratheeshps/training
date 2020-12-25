@@ -7,12 +7,11 @@ using AccountService.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Web.Http;
 
 namespace AccountService.Controllers
 {
     [Route("api/v{version:apiVersion}/[controller]")]
-    
+   // [Authorize]
     public class AccountsController : ControllerBase
     {
      
@@ -31,11 +30,25 @@ namespace AccountService.Controllers
 
             AccountDataAccess accountDataAccess = new AccountDataAccess();
             
-            return Ok(accountDataAccess.GetAccounts("123"));
+            return Ok(accountDataAccess.GetAccounts());
         }
 
-       
+        /// Get Individual Account
+        /// 
+        [HttpPost]
+        public IActionResult Post([FromBody] AccountNoModel model)
+        {
+            AccountDataAccess accountDataAccess = new AccountDataAccess();
+            return Ok(accountDataAccess.GetSingleAccount(model.AccountNo));
+        }
 
-        
+        [HttpPost("getaccount")]
+        public IActionResult GetAccount([FromBody] AccountNoModel model)
+        {
+            AccountDataAccess accountDataAccess = new AccountDataAccess();
+            return Ok(accountDataAccess.GetSingleAccount(model.AccountNo));
+        }
+
+
     }
 }

@@ -32,8 +32,8 @@ namespace AccountService.Utilities
             return result;
         }
 
-        public static TData ExtecuteProcedureReturnData<TData>(string procName,
-            Func<SqlDataReader, TData> data,
+        public static T ExtecuteProcedureReturnData<T>(string procName,
+            Func<SqlDataReader, T> data,
             params SqlParameter[] parameters)
         {
             using (var sqlConnection = new SqlConnection(ConnectionString))
@@ -49,7 +49,7 @@ namespace AccountService.Utilities
                     sqlConnection.Open();
                     using (var reader = sqlCommand.ExecuteReader())
                     {
-                        TData elements;
+                        T elements;
                         try
                         {
                             elements = data(reader);

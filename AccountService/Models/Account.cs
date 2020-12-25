@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace AccountService.Models
 {
+    public class AccountNoModel
+    {
+        public string AccountNo { get; set; }
+    }
+
     // Select AccountNumber, AccountType,AccountName,LedgerCode,CustomerID,Balance,CurrencyName from AcccountsTable
     public class Account : IAccount
     {

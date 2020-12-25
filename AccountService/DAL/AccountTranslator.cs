@@ -11,25 +11,24 @@ namespace AccountService.DAL
     public static class AccountTranslator
     {
        
-        public static List<Account> TranslateAccount(this SqlDataReader reader)
+        public static List<Account> TranslateAccountList(this SqlDataReader reader)
         {
             var list = new List<Account>();
             while (reader.Read())
             {
-
-                list.Add(TranslateAsAccount(reader));
+                list.Add(TranslateAsAccount(reader, true));
             }
             return list;
         }
 
-        private static Account TranslateAsAccount(SqlDataReader reader)
+        public static Account TranslateAsAccount(this SqlDataReader reader,bool isList = false)
         {
-            //if (!isList)
-            //{
-            //    if (!reader.HasRows)
-            //        return null;
-            //    reader.Read();
-            //}
+            if (!isList)
+            {
+                if (!reader.HasRows)
+                    return null;
+                reader.Read();
+            }
             var item = new Account();
 
             if (reader.IsColumnExists("AccountName"))

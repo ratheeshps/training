@@ -8,7 +8,8 @@ namespace AccountService.Repostirory
 {
     public interface IAccountDataAccess
     {
-        Response<List<Account>> GetAccounts(string customerid);
+        Response<Account> GetSingleAccount(string accountNo);
+        Response<List<Account>> GetAccounts();
         Response<Account> GetAccountDetails();
     }
 }

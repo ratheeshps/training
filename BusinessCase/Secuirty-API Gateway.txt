@@ -1,0 +1,69 @@
+API Gateways
+
+
+
+
+Services - > Micro services
+
+ASMX -> WCF -> Web API -> Microserivce
+
+Devolopment and Deployements seperate from other service
+Scalability
+Reusable components - with modular approach
+
+Account  - PostAccount, GetAccountInfo, AccountList -  100000 -> Rule -> if number 5000 , create another instant of AccountAPI
+
+Beneficiaries -
+Transaction
+
+eCommerce
+-----------------------
+OrdersAPI
+
+ProductsAPI - once in week
+
+Alert System
+
+
+Product Information  - website
+--------------------------
+ProductsAPI - once in week
+
+
+http://localhost: 8110/api/v1/account
+http://localhost: 8120/api/v1/beneficay
+
+Account  Service - host in a seperate IIS, Docker  - 8110
+Beneficiaries - 8120
+Transaction
+
+PII - personel identifiable information 
+
+MIM - 
+Fiddler.net
+Burpsuite - Intercepting tools 
+
+http://localhost: 8110/api/v1/login -> ratheesh, password
+Fiddler will capture -> edit request / response
+
+
+
+Certificate 
+
+Https -> processing
+
+https -> SSL Handshake (in order to avoid fake SSL manipulation)
+
+
+C# - Folder , store certificate
+- Request header encrypted certificate value - stored certificate
+
+
+JWT ->
+BreakPoint 
+
+
+
+
+
+

@@ -5,6 +5,12 @@ using System.Threading.Tasks;
 
 namespace AccountService.Models
 {
+    public class JwtAudience
+    {
+        public string SignInKey { get; set; }
+        public string Issuer { get; set; }
+        public string Audience { get; set; }
+    }
     public class Audience
     {
         public string Secret { get; set; }

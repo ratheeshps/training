@@ -11,7 +11,11 @@ namespace AccountService.Models
         public string Username { get; set; }
         public string Password { get; set; }
     }
-
+    public class ClientAuthentication
+    {
+        public string ClientKey { get; set; }
+        public string ClientSecret { get; set; }
+    }
     public class AuthResponse
     {
         public string Token { get; set; }

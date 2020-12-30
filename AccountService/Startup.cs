@@ -20,7 +20,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using AccountService.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace AccountService
 {
@@ -38,18 +38,11 @@ namespace AccountService
         {
             services.AddControllers();
 
-            //services.AddSingleton<IValidateBankingUser, ValidateBankinguser>();
-            // services.AddAuthorization(options =>
-            //{ 
-            //     );
-
-            //services.AddAuthentication("BasicAuthentication")
-            //   .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
-
-            services.Configure<Audience>(Configuration.GetSection("Audience"));
             
-            services.AddTransient<ITokenService, TokenService>();
+            services.Configure<Audience>(Configuration.GetSection("Audience"));
 
+            services.Configure<JwtAudience>(Configuration.GetSection("JwtAudience"));
+            
 
             //Adding Version
             services.AddApiVersioning(o =>
@@ -60,34 +53,37 @@ namespace AccountService
                 o.ApiVersionReader = new HeaderApiVersionReader("x-api-version");
             });
 
-
-
+            //Get Audience section from appsetting.json
             var audienceConfig = Configuration.GetSection("Audience");
+         
+            var jwtConfig = Configuration.GetSection("JwtAudience");
 
-            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(audienceConfig["Secret"]));
+            //Define the Schemes to JwtBearer
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(
+                x=>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey =new SymmetricSecurityKey(Encoding.ASCII.GetBytes(audienceConfig["Secret"])),
+                        ValidateIssuer = true,
+                        ValidIssuer = audienceConfig["Iss"],
+                        ValidateAudience = true,
+                        ValidAudience = audienceConfig["Aud"],
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero,
+                        RequireExpirationTime = true,
+                    };
+                });
+            services.AddSingleton<IJwtManager,JwtManager>();
 
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = signingKey,
-                ValidateIssuer = true,
-                ValidIssuer = audienceConfig["Iss"],
-                ValidateAudience = true,
-                ValidAudience = audienceConfig["Aud"],
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero,
-                RequireExpirationTime = true,
-            };
-
-            services.AddAuthentication(o =>
-            {
-                o.DefaultAuthenticateScheme = "Training";
-            })
-            .AddJwtBearer("Training", x =>
-            {
-                x.RequireHttpsMetadata = false;
-                x.TokenValidationParameters = tokenValidationParameters;
-            });
+           
 
         }
 
@@ -106,6 +102,7 @@ namespace AccountService
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseStaticFiles();
+
             //Logging
 
             

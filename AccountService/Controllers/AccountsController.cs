@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AccountService.Controllers
 {
     [Route("api/v{version:apiVersion}/[controller]")]
-   // [Authorize]
+   [Authorize]
     public class AccountsController : ControllerBase
     {
      

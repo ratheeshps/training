@@ -1,4 +1,5 @@
-﻿using AccountService.Models;
+﻿using AccountService.DAL;
+using AccountService.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -14,12 +15,7 @@ namespace AccountService.Handler
     public class JwtManager : IJwtManager
     {
 
-        private IDictionary<string, string> userStore = new Dictionary<string, string>
-        {
-            {"ratheesh","pass1" },
-            {"ratheesh1","pass2" },
-            {"ratheesh2","pass3" },
-        };
+       
 
 
         private readonly IOptions<Audience> audOptions;
@@ -28,13 +24,15 @@ namespace AccountService.Handler
             this.audOptions = audience;
         }
 
-        public string Authenticate(string uname, string pwd)
+        public string Authenticate(UserModel model)
         {
-            if (!userStore.Any(x => x.Key == uname && x.Value == pwd))
+            UserAccess userAccess = new UserAccess();
+            Response<UserResponse> response = userAccess.GetUserAccess(model);
+            if (response.Status != "1")
             {
                 return null;
-            }
 
+            }
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var tokenKey = Encoding.ASCII.GetBytes(audOptions.Value.Secret);
@@ -42,7 +40,9 @@ namespace AccountService.Handler
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]{
-                new Claim(ClaimTypes.Name,uname)
+                  new Claim(ClaimTypes.Name,response.Data.CustomerName),
+                new Claim("MobilePhone",response.Data.MobileNumber),
+                new Claim("UserId",response.Data.UserId.ToString()),
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials

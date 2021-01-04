@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AccountService.Handler
+namespace AccountService.Repostirory
 {
-    public interface IJwtManager
+    public interface IUserAccess
     {
-        string Authenticate(UserModel model);
+        Response<UserResponse> GetUserAccess(UserModel user);
     }
 }

@@ -42,11 +42,20 @@ namespace AccountService.Controllers
         [AllowAnonymous]
         public IActionResult Post(UserModel model)
         {
-           var token= manager.Authenticate(model.Username, model.Password);
-            if (!string.IsNullOrEmpty(token))
-                return Ok(token);
-            else
-            return Unauthorized();
+            try
+            {
+                var token = manager.Authenticate(model);
+                if (!string.IsNullOrEmpty(token))
+                    return Ok(token);
+                else
+                    return Unauthorized();
+            }
+            catch (Exception ex)
+            {
+
+                return NotFound(ex.Message);
+            }
+          
         }
     }
 }

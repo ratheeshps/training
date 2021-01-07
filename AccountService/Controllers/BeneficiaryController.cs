@@ -15,7 +15,7 @@ namespace AccountService.Controllers
         public IActionResult Post(CustomerModel model)
         {
             BeneficiaryDataAcces bd = new BeneficiaryDataAcces();
-            return Ok(bd.GetBeneficiaries(model.CustomerId,"own"));
+            return Ok(bd.GetBeneficiaries(model.CustomerId,"NEFT"));
         }
     }
 }

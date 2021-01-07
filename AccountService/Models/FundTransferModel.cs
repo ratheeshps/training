@@ -7,10 +7,9 @@ namespace AccountService.Models
 {
     public class FundTransferModel
     {
-        public List<Account> OwnAccountList { get; set; }
-        public List<Account> BeneficiaryAccountList { get; set; }
-        public string OwnAccountNumber { get; set; }
-        public string BeneficiaryAccountNumber { get; set; }
+        public string CustomerId { get; set; }
+        public string FromAccount { get; set; }
+        public string ToAccount { get; set; }
         public string Amount { get; set; }
         public string Remarks { get; set; }
     }

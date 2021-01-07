@@ -6,15 +6,14 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using AccountService.DAL;
 
 namespace AccountService.DAL
 {
-    public class BeneficiaryDataAcces : BaseDAL, IBeneficiaryDataAccess
+    public class FundTransferDataAccess : BaseDAL, IFundTransferDataAccess
     {
-        public Response<List<BeneficiaryModel>> GetBeneficiaries(string customerid,string type)
+        public Response<FundTransferResponse> TransferFunds(FundTransferModel model)
         {
-            Response<List<BeneficiaryModel>> response = new Response<List<BeneficiaryModel>>();
+            Response<FundTransferResponse> response = new Response<FundTransferResponse>();
 
             var outStatus = new SqlParameter("@Status", SqlDbType.NVarChar, 20)
             {
@@ -26,16 +25,19 @@ namespace AccountService.DAL
             };
 
             SqlParameter[] param = {
-                  new SqlParameter("@customerid",customerid),
-                  new SqlParameter("@Type",type),
+                  new SqlParameter("@customerid",model.CustomerId),
+                  new SqlParameter("@fromAccount",model.FromAccount),
+                  new SqlParameter("@toaccount",model.ToAccount),
+                  new SqlParameter("@amount",model.Amount),
+                  new SqlParameter("@remarks",model.Remarks),
               outStatus,
               outMessage
             };
 
 
-            List<BeneficiaryModel> result = SqlHelper.ExtecuteProcedureReturnData<List<BeneficiaryModel>>
-                ("sp_GetBeneficiaries",
-                r => r.TranslateBeneficiaryList(), param);
+            FundTransferResponse result = SqlHelper.ExtecuteProcedureReturnData<FundTransferResponse>
+                ("sp_TranferFunds",
+                r => r.TranslateAsFTResponse(), param);
 
 
             response.Data = result;
@@ -43,7 +45,6 @@ namespace AccountService.DAL
             response.Message = outMessage.Value.ToString();
 
             return response;
-
         }
     }
 }

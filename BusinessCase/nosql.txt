@@ -1,0 +1,37 @@
+SQL and NoSQL
+
+Relational  - Non Relational
+SQL Server	MongoDB   - Json based
+Oracle		Cassandra  -Json based
+MySQL		DocumentDB
+PostgresSQL 	Gremlin
+
+MongoDB#1
+UserProfile table
+ID: 10002
+Name: Ratheesh
+Addres: {}
+
+
+Another - Database Instance
+
+User Driving licence image table
+ID: 10002
+FrontImage: 
+BackImage:
+
+
+
+Azure Cosmos DB
+supports multiple no sql apis 
+
+
+Shopping cart
+
+User table  - UserID
+Profile Table - UserID, Address - {"Address1":"House3","city","TN"}
+
+
+SQL 
+
+

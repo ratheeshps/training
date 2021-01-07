@@ -1,0 +1,6 @@
+Azure SQL 
+.bak wont support in Azure SQL
+.bacpac format file to restore azure sql
+
+StoreProcedure, EntityFramework, ADO.NET 
+

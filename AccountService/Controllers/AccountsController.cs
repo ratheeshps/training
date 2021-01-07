@@ -32,6 +32,20 @@ namespace AccountService.Controllers
             
             return Ok(accountDataAccess.GetAccounts());
         }
+       [HttpPost("GetCustomerAccount")]
+        public IActionResult Get([FromBody] CustomerModel model)
+        {
+            // 1. ADO.NET - most performing method
+            // 2. Dapper - high performance and easily code
+            // 3. EntityFramework - easily code but heavy, low performance 
+
+            // if you are developer without much db knowledge - entrity framework is the best.
+
+
+            AccountDataAccess accountDataAccess = new AccountDataAccess();
+
+            return Ok(accountDataAccess.GetCustomerAccounts(model.CustomerId));
+        }
 
         /// Get Individual Account
         /// 
@@ -39,14 +53,14 @@ namespace AccountService.Controllers
         public IActionResult Post([FromBody] AccountNoModel model)
         {
             AccountDataAccess accountDataAccess = new AccountDataAccess();
-            return Ok(accountDataAccess.GetSingleAccount(model.AccountNo));
+            return Ok(accountDataAccess.GetSingleAccount(model.AccountNumber));
         }
 
         [HttpPost("getaccount")]
         public IActionResult GetAccount([FromBody] AccountNoModel model)
         {
             AccountDataAccess accountDataAccess = new AccountDataAccess();
-            return Ok(accountDataAccess.GetSingleAccount(model.AccountNo));
+            return Ok(accountDataAccess.GetSingleAccount(model.AccountNumber));
         }
 
 

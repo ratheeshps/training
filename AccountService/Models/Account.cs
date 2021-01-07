@@ -8,7 +8,12 @@ namespace AccountService.Models
 {
     public class AccountNoModel
     {
-        public string AccountNo { get; set; }
+        public string AccountNumber { get; set; }
+    }
+    public class CustomerModel
+    {
+        public string CustomerId { get; set; }
+        public string Type { get; set; }
     }
 
     // Select AccountNumber, AccountType,AccountName,LedgerCode,CustomerID,Balance,CurrencyName from AcccountsTable
